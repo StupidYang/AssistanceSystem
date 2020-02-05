@@ -25,25 +25,45 @@
                         <el-table-column prop="name" label="姓名"></el-table-column>
                         <el-table-column prop="department" label="部门"></el-table-column>
                         <el-table-column prop="post" label="职务"></el-table-column>
-                        <el-table-column prop="class" label="班级"></el-table-column>
                         <el-table-column fixed="right" label="操作" width="100">
                             <template slot-scope="scope">
-                            <el-button v-on:click="addressWatch(scope.row)" type="text">查看</el-button>
+                            <el-button v-on:click="addressWatch(scope.$index)" type="text">查看</el-button>
                             <el-button type="text">消息</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                 </div>
+                <br><br><br><br><br><br><br><br><br><br><br><br>
             </div>
 <!--            查看详情栏-->
             <div v-bind:class="{'hidden':isWatch}">
-                查看信息
-                <el-table :data="watchData" style="width: 99.9%">
-                    <el-table-column prop="name" label="姓名"></el-table-column>
-                    <el-table-column prop="department" label="部门"></el-table-column>
-                    <el-table-column prop="post" label="职务"></el-table-column>
-                    <el-table-column prop="class" label="班级"></el-table-column>
-                </el-table>
+                <div class="text-left" style="margin-bottom: 1em">
+                    <el-button type="text" size="medium" icon="el-icon-back" v-on:click="searchReturn">返回</el-button>
+                </div>
+                <div>
+                    <div class="col-sm-6 col-xs-6 col-xl-6 col-lg-6 text-left personal">
+                        <h4>姓名：{{watchData[0].name}}</h4>
+                        <h4>部门：{{watchData[0].department}}</h4>
+                        <h4>职务：{{watchData[0].post}}</h4>
+                    </div>
+                    <div class="col-sm-6 col-xs-6 col-xl-6 col-lg-6 text-right personal">
+                        <img class="img-circle" src="../../assets/image/test.jpg" height="97" width="97"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="col-sm-7 col-xs-7 col-xl-7 col-lg-7 text-left" style="margin-top: 1em">
+                        <h4>班级：{{watchData[0].classes}}</h4>
+                        <h4>学号：{{watchData[0].num}}</h4>
+                        <h4>电话号码：{{watchData[0].tel}}</h4>
+                        <h4>QQ：{{watchData[0].qq}}</h4>
+                    </div>
+                    <div class="col-sm-5 col-xs-5 col-xl-5 col-lg-5 text-right" style="margin-top: 1.6em">
+                        <el-button type="primary">发送信息</el-button>
+                        <el-button type="success" style="margin-top: 0.5em">复制电话</el-button>
+                        <el-button type="success" style="margin-top: 0.5em">复制QQ号</el-button>
+                    </div>
+                </div>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </div>
         </div>
     </div>
@@ -56,29 +76,48 @@
             return{
                 input:'',
                 tableData: [{
-                    class: '计科172',
+                    classes: '计科172班',
                     name: '杨旭东',
                     department: 'a',
-                    post:'a'
+                    post:'a',
+                    tel:'123456789',
+                    qq:'123456789',
+                    num:'123456789'
                 },{
-                        class: '计科172',
-                        name: '杨旭东',
+                        classes: '计算机184班',
+                        name: '李晨宜',
                         department: 'b',
-                        post:'b'
+                        post:'b',
+                        tel:'123456789',
+                        qq:'123456789',
+                        num:'123456789'
                 },{
-                        class: '计科172',
-                        name: '杨旭东',
+                        classes: '电子183班',
+                        name: '杨开元',
                         department: 'c',
-                        post:'c'
+                        post:'c',
+                        tel:'123456789',
+                        qq:'123456789',
+                        num:'123456789'
                 },{
-                        class: '计科172',
-                        name: '杨旭东',
+                        classes: '电气181班',
+                        name: '孙国韬',
                         department: 'd',
-                        post:'d'
+                        post:'d',
+                        tel:'123456789',
+                        qq:'123456789',
+                        num:'123456789'
                 }],
                 isWatch:true,
                 isSearch:true,
-                watchData:{},
+                watchData:[
+                    {class: ' ',
+                    name: ' ',
+                    department: ' ',
+                    post:' ',
+                    tel:' ',
+                    qq:' '}
+                    ],
             }
         },
         props:{
@@ -95,11 +134,15 @@
             addressWatch:function (val) {
                 this.isSearch = true
                 this.isWatch = false
-                this.watchData = val
+                this.watchData = new Array(this.tableData[val])
                 // eslint-disable-next-line no-console
-                console.log(val)
+                // console.log(val)
                 // eslint-disable-next-line no-console
-                console.log(this.watchData)
+                // console.log(this.watchData)
+            },
+            searchReturn:function () {
+                this.isSearch = false
+                this.isWatch = true
             }
         }
     }
@@ -120,5 +163,10 @@
     }
     .hidden{
         display: none;
+    }
+    .personal{
+        background-color: #f2faff;
+        padding-top: 1em;
+        padding-bottom: 1em;
     }
 </style>
